@@ -436,8 +436,32 @@
       '相當於止損距離的 '+(r.breakeven*100).toFixed(1)+'%。';
   }
 
-  ['capital','entry','stop','tp','risk','dp','incfee','levs','vip','openSide','closeSide','tpSide','cMaker','cTaker']
-    .forEach(id=>{ const e=$(id); e.addEventListener('input',render); e.addEventListener('change',render); });
+  const FIELDS = ['capital','entry','stop','tp','risk','dp','incfee','levs','vip','openSide','closeSide','tpSide','cMaker','cTaker'],
+        STORE_KEY = 'position-calculator:inputs';
+
+  function load(){
+    let saved;
+    try{ saved = JSON.parse(localStorage.getItem(STORE_KEY)); }catch(e){}
+    if (!saved) return;
+    FIELDS.forEach(id=>{
+      const e=$(id), v=saved[id];
+      if (v === undefined) return;
+      if (e.type === 'checkbox') e.checked = !!v;
+      else if (e.tagName !== 'SELECT' || [...e.options].some(o=>o.value===v)) e.value = v;
+    });
+  }
+
+  function save(){
+    const data = {};
+    FIELDS.forEach(id=>{ const e=$(id); data[id] = e.type==='checkbox' ? e.checked : e.value; });
+    try{ localStorage.setItem(STORE_KEY, JSON.stringify(data)); }catch(e){}
+  }
+
+  load();
+  FIELDS.forEach(id=>{
+    const e=$(id), h=()=>{ render(); save(); };
+    e.addEventListener('input',h); e.addEventListener('change',h);
+  });
 
   function doCopy(btn, label){
     const txt = $('orderValue').textContent;
