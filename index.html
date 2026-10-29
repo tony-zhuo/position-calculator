@@ -8,85 +8,120 @@
   :root{
     --bg:#0f1115; --card:#181b22; --card2:#1f232c; --line:#2b3039;
     --text:#e8eaed; --muted:#9aa3af; --accent:#f0932b; --accent2:#ffb14e;
-    --green:#26c281; --red:#ec5b56; --blue:#4d9fff;
+    --green:#26c281; --red:#ec5b56;
   }
   *{box-sizing:border-box}
   body{
-    margin:0; padding:24px 16px 60px;
+    margin:0; padding:22px 16px 40px;
     background:var(--bg); color:var(--text);
     font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang TC","Noto Sans TC","Microsoft JhengHei",sans-serif;
     line-height:1.6;
   }
-  .wrap{max-width:760px;margin:0 auto}
+  .wrap{max-width:1140px;margin:0 auto}
   h1{font-size:20px;margin:0 0 4px}
-  .sub{color:var(--muted);font-size:13px;margin:0 0 20px}
-  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin-bottom:16px}
-  .card h2{font-size:14px;margin:0 0 14px;color:var(--muted);font-weight:600;letter-spacing:.04em}
-  label{display:block;font-size:13px;color:var(--muted);margin-bottom:6px}
+  .sub{color:var(--muted);font-size:13px;margin:0 0 18px}
+
+  /* ── 兩欄版面：左輸入（sticky）／右結果 ── */
+  .layout{display:grid;grid-template-columns:380px minmax(0,1fr);gap:18px;align-items:start}
+  .colL{position:sticky;top:16px}
+  @media(max-width:920px){
+    .layout{grid-template-columns:1fr;gap:0}
+    .colL{position:static}
+    body{padding-bottom:86px}
+  }
+
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:14px}
+  .card h2{font-size:13px;margin:0 0 13px;color:var(--muted);font-weight:600;letter-spacing:.04em}
+  label{display:block;font-size:12.5px;color:var(--muted);margin-bottom:5px}
   input[type=number],input[type=text],select{
-    width:100%;padding:11px 13px;font-size:16px;
+    width:100%;padding:10px 12px;font-size:15px;
     background:var(--card2);border:1px solid var(--line);border-radius:9px;color:var(--text);
     outline:none;-moz-appearance:textfield;
   }
   input[type=number]::-webkit-outer-spin-button,
   input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
   input:focus,select:focus{border-color:var(--accent)}
-  .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-  .row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
-  .field{margin-bottom:14px}
+  input.sl:focus{border-color:var(--red)}
+  input.tp:focus{border-color:var(--green)}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .field{margin-bottom:12px}
   .field:last-child{margin-bottom:0}
-  .hint{font-size:11.5px;color:#6b7280;margin-top:5px}
-  .toggle{display:flex;align-items:center;gap:9px;font-size:13px;color:var(--text);cursor:pointer;user-select:none;margin-top:14px}
-  .toggle input{width:17px;height:17px;accent-color:var(--accent);cursor:pointer;flex:none}
+  .hint{font-size:11px;color:#6b7280;margin-top:4px}
+  .toggle{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--text);cursor:pointer;user-select:none;margin-top:12px}
+  .toggle input{width:16px;height:16px;accent-color:var(--accent);cursor:pointer;flex:none}
+  .tagL{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:5px;vertical-align:1px}
+  .tagL.r{background:var(--red)} .tagL.g{background:var(--green)}
 
-  .feeline{
-    background:var(--card2);border-radius:9px;padding:10px 13px;margin-top:12px;
-    font-size:12.5px;color:var(--muted);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+  details.fee{background:var(--card);border:1px solid var(--line);border-radius:14px;margin-bottom:14px;overflow:hidden}
+  details.fee > summary{
+    list-style:none;cursor:pointer;padding:13px 16px;font-size:12.5px;color:var(--muted);
+    display:flex;align-items:center;gap:8px;flex-wrap:wrap;
   }
-  .feeline b{color:var(--accent2)}
+  details.fee > summary::-webkit-details-marker{display:none}
+  details.fee > summary::before{content:'▸';color:var(--accent);transition:transform .15s}
+  details.fee[open] > summary::before{transform:rotate(90deg)}
+  details.fee > summary b{color:var(--accent2);font-family:ui-monospace,Menlo,monospace}
+  .feeBody{padding:0 16px 16px}
 
   .headline{
     background:linear-gradient(135deg,#2a1d0c,#1d1a14);
-    border:1px solid var(--accent);border-radius:12px;padding:16px 18px;margin-bottom:16px;
+    border:1px solid var(--accent);border-radius:14px;padding:15px 17px;margin-bottom:14px;
   }
-  .headline .lbl{font-size:13px;color:var(--accent2);margin-bottom:2px}
-  .big{font-size:34px;font-weight:700;letter-spacing:-.5px;display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
-  .big .u{font-size:15px;color:var(--muted);font-weight:500}
+  .headline .lbl{font-size:12.5px;color:var(--accent2)}
+  .big{font-size:33px;font-weight:700;letter-spacing:-.5px;display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+  .big .u{font-size:14px;color:var(--muted);font-weight:500}
   .copy{
-    margin-left:auto;font-size:12px;padding:5px 11px;border-radius:7px;cursor:pointer;
-    background:var(--card2);border:1px solid var(--line);color:var(--muted);
+    margin-left:auto;font-size:12px;padding:6px 13px;border-radius:7px;cursor:pointer;
+    background:var(--card2);border:1px solid var(--line);color:var(--muted);align-self:center;
   }
   .copy:hover{border-color:var(--accent);color:var(--accent2)}
 
-  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:11px;overflow:hidden}
-  .stat{background:var(--card);padding:13px 15px}
-  .stat .k{font-size:11.5px;color:var(--muted)}
-  .stat .v{font-size:19px;font-weight:600;margin-top:2px}
+  .stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .stats.rr{grid-template-columns:repeat(4,minmax(0,1fr))}
+  @media(max-width:920px){.stats,.stats.rr{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  .stat{background:var(--card);padding:11px 13px}
+  .stat .k{font-size:11px;color:var(--muted)}
+  .stat .v{font-size:17px;font-weight:600;margin-top:1px}
 
-  table{width:100%;border-collapse:collapse;font-size:14px}
-  th,td{padding:9px 10px;text-align:right;border-bottom:1px solid var(--line)}
-  th{color:var(--muted);font-weight:500;font-size:12px}
+  table{width:100%;border-collapse:collapse;font-size:13.5px}
+  th,td{padding:8px 9px;text-align:right;border-bottom:1px solid var(--line)}
+  th{color:var(--muted);font-weight:500;font-size:11.5px}
   th:first-child,td:first-child{text-align:left}
   tr:last-child td{border-bottom:none}
   td.warn{color:var(--red)}
-  .tag{font-size:10px;padding:2px 6px;border-radius:5px;background:#33261a;color:var(--accent2);margin-left:6px;vertical-align:middle}
+  .tag{font-size:10px;padding:2px 6px;border-radius:5px;background:#33261a;color:var(--accent2);margin-left:5px;vertical-align:middle}
 
-  .dir{display:inline-block;font-size:12px;padding:3px 10px;border-radius:20px;font-weight:600}
+  .dir{display:inline-block;font-size:11.5px;padding:2px 9px;border-radius:20px;font-weight:600}
   .dir.long{background:#10331f;color:var(--green)}
   .dir.short{background:#3a1c1c;color:var(--red)}
-  .alert{background:#3a1c1c;border:1px solid var(--red);color:#ffb3b0;border-radius:10px;padding:11px 14px;font-size:13px;margin-bottom:16px}
+  .alert{background:#3a1c1c;border:1px solid var(--red);color:#ffb3b0;border-radius:10px;padding:10px 13px;font-size:12.5px;margin-bottom:14px}
 
-  .bar{height:9px;border-radius:6px;background:#2b3039;overflow:hidden;margin:9px 0 7px}
+  .bar{height:8px;border-radius:6px;background:#2b3039;overflow:hidden;margin:9px 0 6px}
   .bar > i{display:block;height:100%;border-radius:6px}
-  .verdict{font-size:13px;padding:11px 14px;border-radius:10px;margin-top:12px;line-height:1.65}
+  .verdict{font-size:12.5px;padding:10px 13px;border-radius:10px;margin-top:11px;line-height:1.6}
   .v-good{background:#12301f;border:1px solid #1f6b45;color:#8ee3b6}
   .v-warn{background:#332812;border:1px solid #7a5c1c;color:#ffd489}
   .v-bad{background:#3a1c1c;border:1px solid #7a2f2c;color:#ffb3b0}
-  details{margin-top:8px}
-  summary{cursor:pointer;color:var(--muted);font-size:13px;padding:4px 0}
-  summary:hover{color:var(--accent2)}
-  .formula{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px;color:#b8c0cc;background:var(--card2);padding:13px 15px;border-radius:9px;white-space:pre-wrap;margin-top:10px;line-height:1.75;overflow-x:auto}
-  @media(max-width:520px){.row,.row3{grid-template-columns:1fr}.big{font-size:28px}}
+
+  details.fx{margin-top:4px}
+  details.fx > summary{cursor:pointer;color:var(--muted);font-size:12.5px;padding:4px 0}
+  details.fx > summary:hover{color:var(--accent2)}
+  .formula{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;color:#b8c0cc;background:var(--card2);padding:12px 14px;border-radius:9px;white-space:pre-wrap;margin-top:9px;line-height:1.7;overflow-x:auto}
+
+  /* ── 手機常駐複製列 ── */
+  .fab{
+    display:none;position:fixed;left:0;right:0;bottom:0;z-index:50;
+    background:rgba(24,27,34,.96);backdrop-filter:blur(10px);
+    border-top:1px solid var(--accent);padding:10px 16px calc(10px + env(safe-area-inset-bottom));
+    align-items:center;gap:12px;
+  }
+  .fab .k{font-size:11px;color:var(--accent2);display:block;line-height:1.3}
+  .fab .v{font-size:21px;font-weight:700;line-height:1.2}
+  .fab button{
+    margin-left:auto;font-size:13px;padding:9px 18px;border-radius:9px;cursor:pointer;
+    background:var(--accent);border:none;color:#1a1205;font-weight:600;
+  }
+  @media(max-width:920px){.fab{display:flex}}
 </style>
 </head>
 <body>
@@ -95,128 +130,136 @@
   <h1>合約倉位計算機</h1>
   <p class="sub">固定風險反推倉位 — 先決定要虧多少，再算該開多大。</p>
 
-  <div class="card">
-    <h2>交易條件</h2>
-    <div class="field">
-      <label>合約帳戶內資金（本金 U）</label>
-      <input type="number" id="capital" value="372" step="any" inputmode="decimal">
+  <div class="layout">
+
+    <!-- ══ 左欄：輸入 ══ -->
+    <div class="colL">
+      <div class="card">
+        <h2>倉位設定</h2>
+        <div class="field">
+          <label>合約帳戶內資金（本金 U）</label>
+          <input type="number" id="capital" value="372" step="any" inputmode="decimal">
+        </div>
+        <div class="field">
+          <label>開倉價格</label>
+          <input type="number" id="entry" value="64792" step="any" inputmode="decimal">
+        </div>
+        <div class="row">
+          <div class="field">
+            <label><span class="tagL r"></span>止損價格</label>
+            <input type="number" class="sl" id="stop" value="64720" step="any" inputmode="decimal">
+          </div>
+          <div class="field">
+            <label><span class="tagL g"></span>止盈價格</label>
+            <input type="number" class="tp" id="tp" value="64867.9" step="any" inputmode="decimal">
+            <div class="hint">留空＝不算盈虧比</div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="field">
+            <label>單筆風險（% 本金）</label>
+            <input type="number" id="risk" value="1" step="any" inputmode="decimal">
+          </div>
+          <div class="field">
+            <label>價格小數位</label>
+            <select id="dp">
+              <option value="auto" selected>自動</option>
+              <option value="0">0</option><option value="1">1</option>
+              <option value="2">2</option><option value="4">4</option><option value="6">6</option>
+            </select>
+          </div>
+        </div>
+        <label class="toggle">
+          <input type="checkbox" id="incfee" checked>
+          <span>手續費併入風險上限</span>
+        </label>
+      </div>
+
+      <details class="fee" id="feeCard">
+        <summary><span>手續費</span><span id="feeSummary"></span></summary>
+        <div class="feeBody">
+          <div class="field">
+            <label>VIP 等級</label>
+            <select id="vip"></select>
+          </div>
+          <div class="row">
+            <div class="field">
+              <label>開倉方式</label>
+              <select id="openSide">
+                <option value="maker" selected>Maker 限價</option>
+                <option value="taker">Taker 市價</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>止損成交</label>
+              <select id="closeSide">
+                <option value="taker" selected>Taker 市價</option>
+                <option value="maker">Maker 限價</option>
+              </select>
+            </div>
+          </div>
+          <div class="field">
+            <label>止盈成交方式</label>
+            <select id="tpSide">
+              <option value="maker" selected>Maker 限價掛單</option>
+              <option value="taker">Taker 市價平倉</option>
+            </select>
+          </div>
+          <div class="row" id="customFees" style="display:none">
+            <div class="field">
+              <label>自訂 Maker（%）</label>
+              <input type="number" id="cMaker" value="0.02" step="any" inputmode="decimal">
+            </div>
+            <div class="field">
+              <label>自訂 Taker（%）</label>
+              <input type="number" id="cTaker" value="0.05" step="any" inputmode="decimal">
+            </div>
+          </div>
+        </div>
+      </details>
     </div>
-    <div class="row">
-      <div class="field">
-        <label>開倉價格</label>
-        <input type="number" id="entry" value="64792" step="any" inputmode="decimal">
+
+    <!-- ══ 右欄：結果 ══ -->
+    <div class="colR">
+      <div id="alert"></div>
+
+      <div class="headline">
+        <div class="lbl">開單的訂單價值</div>
+        <div class="big">
+          <span id="orderValue">—</span><span class="u">U</span>
+          <button class="copy" id="copyBtn">複製</button>
+        </div>
+        <div class="hint" id="qtyLine" style="margin-top:5px"></div>
       </div>
-      <div class="field">
-        <label>止損價格</label>
-        <input type="number" id="stop" value="64720" step="any" inputmode="decimal">
+
+      <div class="stats" id="stats"></div>
+
+      <div id="rrBox"></div>
+
+      <div class="card" style="margin-top:14px">
+        <h2>標準合約保證金方式</h2>
+        <table>
+          <thead><tr><th>槓桿</th><th>所需保證金 (U)</th><th>佔本金</th></tr></thead>
+          <tbody id="levBody"></tbody>
+        </table>
+        <div class="field" style="margin:12px 0 0">
+          <label>自訂槓桿倍數（逗號分隔）</label>
+          <input type="text" id="levs" value="10, 20, 25, 50, 100">
+        </div>
       </div>
+
+      <details class="fx">
+        <summary>計算公式</summary>
+        <div class="formula" id="formula"></div>
+      </details>
     </div>
-    <div class="row">
-      <div class="field">
-        <label>單筆風險（% 本金）</label>
-        <input type="number" id="risk" value="1" step="any" inputmode="decimal">
-      </div>
-      <div class="field">
-        <label>價格小數位</label>
-        <select id="dp">
-          <option value="auto" selected>自動</option>
-          <option value="0">0</option><option value="1">1</option>
-          <option value="2">2</option><option value="4">4</option><option value="6">6</option>
-        </select>
-      </div>
-    </div>
-    <label class="toggle">
-      <input type="checkbox" id="incfee" checked>
-      <span>把手續費一起算進風險上限（總虧損不超過設定的 %）</span>
-    </label>
+
   </div>
+</div>
 
-  <div class="card">
-    <h2>手續費設定</h2>
-    <div class="field">
-      <label>VIP 等級</label>
-      <select id="vip"></select>
-    </div>
-    <div class="row">
-      <div class="field">
-        <label>開倉方式</label>
-        <select id="openSide">
-          <option value="maker" selected>Maker（限價掛單）</option>
-          <option value="taker">Taker（市價吃單）</option>
-        </select>
-      </div>
-      <div class="field">
-        <label>平倉方式</label>
-        <select id="closeSide">
-          <option value="taker" selected>Taker（止損市價觸發）</option>
-          <option value="maker">Maker（限價掛止盈）</option>
-        </select>
-        <div class="hint">止損單觸發多為市價成交 → Taker</div>
-      </div>
-    </div>
-    <div class="row" id="customFees" style="display:none">
-      <div class="field">
-        <label>自訂 Maker 費率（%）</label>
-        <input type="number" id="cMaker" value="0.02" step="any" inputmode="decimal">
-      </div>
-      <div class="field">
-        <label>自訂 Taker 費率（%）</label>
-        <input type="number" id="cTaker" value="0.05" step="any" inputmode="decimal">
-      </div>
-    </div>
-    <div class="feeline" id="feeline"></div>
-  </div>
-
-  <div class="card">
-    <h2>止盈設定（選填 — 用來體檢手續費侵蝕）</h2>
-    <div class="row">
-      <div class="field">
-        <label>止盈價格</label>
-        <input type="number" id="tp" value="64867.9" step="any" inputmode="decimal">
-        <div class="hint">留空則不計算盈虧比</div>
-      </div>
-      <div class="field">
-        <label>止盈成交方式</label>
-        <select id="tpSide">
-          <option value="maker" selected>Maker（限價掛止盈）</option>
-          <option value="taker">Taker（手動市價平）</option>
-        </select>
-      </div>
-    </div>
-  </div>
-
-  <div id="alert"></div>
-
-  <div class="headline">
-    <div class="lbl">開單的訂單價值</div>
-    <div class="big">
-      <span id="orderValue">—</span><span class="u">U</span>
-      <button class="copy" id="copyBtn">複製</button>
-    </div>
-    <div class="hint" id="qtyLine" style="margin-top:6px"></div>
-  </div>
-
-  <div class="stats" id="stats"></div>
-
-  <div id="rrBox"></div>
-
-  <div class="card" style="margin-top:16px">
-    <h2>標準合約保證金方式</h2>
-    <table>
-      <thead><tr><th>槓桿</th><th>所需保證金 (U)</th><th>佔本金</th></tr></thead>
-      <tbody id="levBody"></tbody>
-    </table>
-    <div class="field" style="margin:14px 0 0">
-      <label>自訂槓桿倍數（逗號分隔）</label>
-      <input type="text" id="levs" value="10, 20, 25, 50, 100">
-    </div>
-  </div>
-
-  <details>
-    <summary>計算公式</summary>
-    <div class="formula" id="formula"></div>
-  </details>
-
+<div class="fab">
+  <div><span class="k">訂單價值</span><span class="v" id="fabVal">—</span></div>
+  <button id="fabCopy">複製</button>
 </div>
 
 <script>
@@ -235,87 +278,66 @@
     {k:'sup',    name:'至尊VIP',   maker:0.0000, taker:0.0250},
     {k:'custom', name:'自訂…',     maker:null,   taker:null}
   ];
-
   $('vip').innerHTML = TIERS.map(t =>
     '<option value="' + t.k + '">' + t.name +
     (t.maker !== null ? '（M ' + t.maker.toFixed(4) + '% / T ' + t.taker.toFixed(4) + '%）' : '') +
     '</option>').join('');
 
   function rates(){
-    const k = $('vip').value;
-    const t = TIERS.find(x => x.k === k);
-    if (k === 'custom') {
-      return { maker: (parseFloat($('cMaker').value)||0)/100, taker: (parseFloat($('cTaker').value)||0)/100 };
-    }
-    return { maker: t.maker/100, taker: t.taker/100 };
+    const k = $('vip').value, t = TIERS.find(x => x.k === k);
+    if (k === 'custom') return {
+      maker:(parseFloat($('cMaker').value)||0)/100,
+      taker:(parseFloat($('cTaker').value)||0)/100
+    };
+    return {maker:t.maker/100, taker:t.taker/100};
   }
 
   const num = el => { const v = parseFloat(el.value); return isFinite(v) ? v : NaN; };
-  const fmt = (n, d=2) => isFinite(n)
-    ? n.toLocaleString('en-US', {minimumFractionDigits:d, maximumFractionDigits:d})
-    : '—';
-  const pct = (r, d=4) => (r*100).toFixed(d) + '%';
-
-  function autoDp(v){
-    if (!isFinite(v)) return 2;
-    if (v >= 1000) return 1;
-    if (v >= 10) return 2;
-    return 4;
-  }
+  const fmt = (n,d=2) => isFinite(n) ? n.toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d}) : '—';
+  const pct = (r,d=4) => (r*100).toFixed(d) + '%';
+  const autoDp = v => !isFinite(v) ? 2 : v >= 1000 ? 1 : v >= 10 ? 2 : 4;
 
   function calc(){
-    const capital = num($('capital')),
-          entry   = num($('entry')),
-          stop    = num($('stop')),
-          riskPct = num($('risk')) / 100,
-          incFee  = $('incfee').checked,
-          r       = rates(),
-          fOpen   = $('openSide').value  === 'maker' ? r.maker : r.taker,
-          fClose  = $('closeSide').value === 'maker' ? r.maker : r.taker;
+    const capital = num($('capital')), entry = num($('entry')), stop = num($('stop')),
+          riskPct = num($('risk'))/100, incFee = $('incfee').checked, r = rates(),
+          fOpen  = $('openSide').value  === 'maker' ? r.maker : r.taker,
+          fClose = $('closeSide').value === 'maker' ? r.maker : r.taker;
 
-    if (!isFinite(capital) || !isFinite(entry) || !isFinite(stop)) return {ok:false, msg:'請填入完整數值'};
-    if (entry <= 0) return {ok:false, msg:'開倉價格必須大於 0'};
-    if (entry === stop) return {ok:false, msg:'止損價格不可等於開倉價格'};
-    if (!isFinite(riskPct) || riskPct <= 0) return {ok:false, msg:'風險百分比必須大於 0'};
+    if (!isFinite(capital) || !isFinite(entry) || !isFinite(stop)) return {ok:false,msg:'請填入本金、開倉價與止損價'};
+    if (entry <= 0) return {ok:false,msg:'開倉價格必須大於 0'};
+    if (entry === stop) return {ok:false,msg:'止損價格不可等於開倉價格'};
+    if (!isFinite(riskPct) || riskPct <= 0) return {ok:false,msg:'風險百分比必須大於 0'};
 
-    const stopDist   = Math.abs(entry - stop) / entry;
-    const maxLoss    = capital * riskPct;
-    const feeTotal   = fOpen + fClose;
-    const denom      = incFee ? stopDist + feeTotal : stopDist;
-    const orderValue = maxLoss / denom;
-
-    const priceLoss = orderValue * stopDist;
-    const feeCost   = orderValue * feeTotal;
-    const total     = priceLoss + feeCost;
+    const stopDist = Math.abs(entry-stop)/entry,
+          maxLoss  = capital*riskPct,
+          feeTotal = fOpen + fClose,
+          orderValue = maxLoss / (incFee ? stopDist+feeTotal : stopDist),
+          priceLoss = orderValue*stopDist,
+          feeCost   = orderValue*feeTotal,
+          total     = priceLoss + feeCost;
 
     const res = {
-      ok:true, capital, entry, stop, riskPct, incFee,
-      fOpen, fClose, feeTotal, stopDist, maxLoss, orderValue,
-      qty: orderValue / entry,
+      ok:true, capital, entry, stop, riskPct, incFee, fOpen, fClose, feeTotal,
+      stopDist, maxLoss, orderValue, qty: orderValue/entry,
       priceLoss, feeCost, total,
-      totalPctOfCapital: capital > 0 ? total / capital : NaN,
+      totalPctOfCapital: capital>0 ? total/capital : NaN,
       dir: stop < entry ? 'long' : 'short',
-      breakeven: stopDist > 0 ? feeTotal / stopDist : NaN
+      breakeven: stopDist>0 ? feeTotal/stopDist : NaN
     };
 
-    // ── 止盈 / 盈虧比 ──
     const tp = parseFloat($('tp').value);
-    if (isFinite(tp) && tp > 0) {
-      const fTp     = $('tpSide').value === 'maker' ? r.maker : r.taker;
-      const feeWin  = fOpen + fTp;                       // 獲利時的來回費率
-      const tpDist  = (res.dir === 'long' ? (tp - entry) : (entry - tp)) / entry;
-      const grossP  = orderValue * tpDist;
-      const feeW    = orderValue * feeWin;
-      const netP    = grossP - feeW;
-      const netRR   = (tpDist + feeTotal) !== 0 ? (tpDist - feeWin) / (stopDist + feeTotal) : NaN;
+    if (isFinite(tp) && tp > 0){
+      const fTp = $('tpSide').value === 'maker' ? r.maker : r.taker,
+            feeWin = fOpen + fTp,
+            tpDist = (res.dir==='long' ? (tp-entry) : (entry-tp))/entry,
+            grossP = orderValue*tpDist, feeW = orderValue*feeWin, netP = grossP-feeW,
+            netRR  = (tpDist-feeWin)/(stopDist+feeTotal);
       res.tp = {
-        valid: tpDist > 0, tpDist, feeWin, grossP, feeW, netP,
-        drag: grossP > 0 ? feeW / grossP : NaN,
-        grossRR: stopDist > 0 ? tpDist / stopDist : NaN,
-        netRR,
-        winRate: netRR > 0 ? 1 / (1 + netRR) : NaN,
-        // 讓手續費侵蝕 ≤ 20% 所需的最小止盈幅度
-        minDist: feeWin / 0.20
+        valid: tpDist>0, tpDist, feeWin, grossP, feeW, netP,
+        drag: grossP>0 ? feeW/grossP : NaN,
+        grossRR: stopDist>0 ? tpDist/stopDist : NaN,
+        netRR, winRate: netRR>0 ? 1/(1+netRR) : NaN,
+        minDist: feeWin/0.20
       };
     }
     return res;
@@ -324,125 +346,111 @@
   function render(){
     $('customFees').style.display = $('vip').value === 'custom' ? '' : 'none';
 
+    const rt = rates(),
+          oS = $('openSide').value, cS = $('closeSide').value, tS = $('tpSide').value;
+    $('feeSummary').innerHTML =
+      '開 <b>' + pct(rt[oS]) + '</b> ／ 止損 <b>' + pct(rt[cS]) + '</b> ／ 止盈 <b>' + pct(rt[tS]) + '</b>';
+
     const r = calc();
-    const rt = rates();
-    $('feeline').innerHTML =
-      '開倉 ' + ($('openSide').value === 'maker' ? 'Maker' : 'Taker') + ' <b>' + pct(rt[$('openSide').value]) + '</b>' +
-      ' ＋ 平倉 ' + ($('closeSide').value === 'maker' ? 'Maker' : 'Taker') + ' <b>' + pct(rt[$('closeSide').value]) + '</b>' +
-      ' ＝ 來回 <b>' + pct(rt[$('openSide').value] + rt[$('closeSide').value]) + '</b>';
 
     if (!r.ok){
-      $('alert').innerHTML = '<div class="alert">' + r.msg + '</div>';
-      $('orderValue').textContent = '—';
-      $('qtyLine').textContent = ''; $('stats').innerHTML = '';
-      $('rrBox').innerHTML = '';
-      $('levBody').innerHTML = ''; $('formula').textContent = '';
+      $('alert').innerHTML = '<div class="alert">'+r.msg+'</div>';
+      $('orderValue').textContent = '—'; $('fabVal').textContent = '—';
+      $('qtyLine').textContent=''; $('stats').innerHTML='';
+      $('rrBox').innerHTML=''; $('levBody').innerHTML=''; $('formula').textContent='';
       return;
     }
     $('alert').innerHTML = '';
 
-    const dpSel = $('dp').value;
-    const d = dpSel === 'auto' ? autoDp(r.orderValue) : parseInt(dpSel, 10);
-
-    $('orderValue').textContent = fmt(r.orderValue, d);
+    const dpSel = $('dp').value, d = dpSel==='auto' ? autoDp(r.orderValue) : parseInt(dpSel,10);
+    $('orderValue').textContent = fmt(r.orderValue,d);
+    $('fabVal').textContent = fmt(r.orderValue,d);
     $('qtyLine').innerHTML =
-      '<span class="dir ' + r.dir + '">' + (r.dir === 'long' ? '做多 LONG' : '做空 SHORT') + '</span>' +
-      '　下單數量約 <b>' + fmt(r.qty, r.qty < 1 ? 6 : 4) + '</b> 顆（訂單價值 ÷ 開倉價）';
+      '<span class="dir '+r.dir+'">'+(r.dir==='long'?'做多 LONG':'做空 SHORT')+'</span>'+
+      '　數量約 <b>'+fmt(r.qty, r.qty<1?6:4)+'</b> 顆';
 
-    const over = r.totalPctOfCapital > r.riskPct * 1.001;
-    const c = over ? 'var(--red)' : 'var(--green)';
+    const over = r.totalPctOfCapital > r.riskPct*1.001, c = over?'var(--red)':'var(--green)';
     $('stats').innerHTML = [
-      ['止損距離', (r.stopDist*100).toFixed(3) + ' %'],
-      ['價差虧損', fmt(r.priceLoss, 2) + ' U'],
-      ['預估手續費', fmt(r.feeCost, 2) + ' U'],
-      ['總風險（含費）', '<span style="color:'+c+'">' + fmt(r.total, 2) + ' U</span>'],
-      ['總風險佔本金', '<span style="color:'+c+'">' + (r.totalPctOfCapital*100).toFixed(2) + ' %</span>'],
-      ['手續費佔風險', (r.total>0 ? (r.feeCost/r.total*100).toFixed(1) : '—') + ' %']
-    ].map(([k,v]) => '<div class="stat"><div class="k">'+k+'</div><div class="v">'+v+'</div></div>').join('');
+      ['止損距離',(r.stopDist*100).toFixed(3)+' %'],
+      ['價差虧損',fmt(r.priceLoss,2)+' U'],
+      ['預估手續費',fmt(r.feeCost,2)+' U'],
+      ['總風險（含費）','<span style="color:'+c+'">'+fmt(r.total,2)+' U</span>'],
+      ['總風險佔本金','<span style="color:'+c+'">'+(r.totalPctOfCapital*100).toFixed(2)+' %</span>'],
+      ['手續費佔風險',(r.total>0?(r.feeCost/r.total*100).toFixed(1):'—')+' %']
+    ].map(([k,v])=>'<div class="stat"><div class="k">'+k+'</div><div class="v">'+v+'</div></div>').join('');
 
-    // ── 止盈 / 盈虧比 區塊 ──
     const t = r.tp;
-    if (!t) {
-      $('rrBox').innerHTML = '';
-    } else if (!t.valid) {
-      $('rrBox').innerHTML = '<div class="alert" style="margin-top:16px">止盈價格方向不對：' +
-        (r.dir === 'long' ? '做多的止盈價必須高於開倉價' : '做空的止盈價必須低於開倉價') + '</div>';
+    if (!t){ $('rrBox').innerHTML=''; }
+    else if (!t.valid){
+      $('rrBox').innerHTML = '<div class="alert" style="margin-top:14px">止盈價格方向不對：'+
+        (r.dir==='long'?'做多的止盈價必須高於開倉價':'做空的止盈價必須低於開倉價')+'</div>';
     } else {
-      const dragPct = t.drag * 100;
-      const barC = dragPct >= 40 ? 'var(--red)' : dragPct >= 20 ? 'var(--accent)' : 'var(--green)';
-      const vc   = dragPct >= 40 ? 'v-bad'      : dragPct >= 20 ? 'v-warn'       : 'v-good';
-      const verdict = dragPct >= 40
-        ? '❌ 手續費吃掉毛利的 ' + dragPct.toFixed(1) + '% — 止盈幅度太窄了。'
-        : dragPct >= 20
-          ? '⚠️ 手續費吃掉毛利的 ' + dragPct.toFixed(1) + '% — 還在可接受邊緣。'
-          : '✅ 手續費只吃掉毛利的 ' + dragPct.toFixed(1) + '%，影響不大。';
-      const suggestPx = r.entry * (1 + (r.dir === 'long' ? 1 : -1) * t.minDist);
-
+      const dp2 = t.drag*100,
+            barC = dp2>=40?'var(--red)':dp2>=20?'var(--accent)':'var(--green)',
+            vc   = dp2>=40?'v-bad':dp2>=20?'v-warn':'v-good',
+            verdict = dp2>=40 ? '❌ 手續費吃掉毛利的 '+dp2.toFixed(1)+'% — 止盈幅度太窄了。'
+                   : dp2>=20 ? '⚠️ 手續費吃掉毛利的 '+dp2.toFixed(1)+'% — 還在可接受邊緣。'
+                             : '✅ 手續費只吃掉毛利的 '+dp2.toFixed(1)+'%，影響不大。',
+            sugPx = r.entry*(1+(r.dir==='long'?1:-1)*t.minDist);
       $('rrBox').innerHTML =
-        '<div class="card" style="margin-top:16px">' +
-          '<h2>盈虧比體檢（扣除手續費後）</h2>' +
-          '<div class="stats">' +
-            [['止盈距離', (t.tpDist*100).toFixed(3) + ' %'],
-             ['毛利', fmt(t.grossP, 2) + ' U'],
-             ['獲利端手續費', fmt(t.feeW, 2) + ' U'],
-             ['淨利', '<span style="color:' + (t.netP > 0 ? 'var(--green)' : 'var(--red)') + '">' + fmt(t.netP, 2) + ' U</span>'],
-             ['帳面盈虧比', t.grossRR.toFixed(2) + ' : 1'],
-             ['真實盈虧比', '<span style="color:' + (t.netRR >= 1 ? 'var(--green)' : t.netRR >= 0.5 ? 'var(--accent)' : 'var(--red)') + '">' + (isFinite(t.netRR) ? t.netRR.toFixed(2) : '—') + ' : 1</span>'],
-             ['需要勝率才不虧', isFinite(t.winRate) ? (t.winRate*100).toFixed(0) + ' %' : '永遠虧'],
-             ['獲利端來回費率', pct(t.feeWin)]
-            ].map(([k,v]) => '<div class="stat"><div class="k">'+k+'</div><div class="v">'+v+'</div></div>').join('') +
-          '</div>' +
-          '<div class="bar"><i style="width:' + Math.min(100, dragPct).toFixed(1) + '%;background:' + barC + '"></i></div>' +
-          '<div class="hint">手續費侵蝕毛利的比例（綠 &lt;20% ／ 橘 20–40% ／ 紅 &gt;40%）</div>' +
-          '<div class="verdict ' + vc + '">' + verdict +
-            '<br>要把侵蝕壓到 20% 以內，止盈至少要走 <b>' + (t.minDist*100).toFixed(3) + '%</b>' +
-            '（約 ' + fmt(suggestPx, suggestPx < 1 ? 6 : 1) + '）。' +
-          '</div>' +
-        '</div>';
+        '<div class="card" style="margin-top:14px"><h2>盈虧比體檢（扣除手續費後）</h2><div class="stats rr">'+
+        [['止盈距離',(t.tpDist*100).toFixed(3)+' %'],
+         ['毛利',fmt(t.grossP,2)+' U'],
+         ['獲利端手續費',fmt(t.feeW,2)+' U'],
+         ['淨利','<span style="color:'+(t.netP>0?'var(--green)':'var(--red)')+'">'+fmt(t.netP,2)+' U</span>'],
+         ['帳面盈虧比',t.grossRR.toFixed(2)+' : 1'],
+         ['真實盈虧比','<span style="color:'+(t.netRR>=1?'var(--green)':t.netRR>=0.5?'var(--accent)':'var(--red)')+'">'+(isFinite(t.netRR)?t.netRR.toFixed(2):'—')+' : 1</span>'],
+         ['需要勝率才不虧',isFinite(t.winRate)?(t.winRate*100).toFixed(0)+' %':'永遠虧'],
+         ['獲利端來回費率',pct(t.feeWin)]
+        ].map(([k,v])=>'<div class="stat"><div class="k">'+k+'</div><div class="v">'+v+'</div></div>').join('')+
+        '</div><div class="bar"><i style="width:'+Math.min(100,dp2).toFixed(1)+'%;background:'+barC+'"></i></div>'+
+        '<div class="hint">手續費侵蝕毛利的比例（綠 &lt;20% ／ 橘 20–40% ／ 紅 &gt;40%）</div>'+
+        '<div class="verdict '+vc+'">'+verdict+
+        '<br>要把侵蝕壓到 20% 以內，止盈至少要走 <b>'+(t.minDist*100).toFixed(3)+'%</b>（約 '+fmt(sugPx,sugPx<1?6:1)+'）。</div></div>';
     }
 
-    const levs = $('levs').value.split(/[,，\s]+/).map(parseFloat).filter(v => isFinite(v) && v > 0);
-    $('levBody').innerHTML = levs.map(L => {
-      const m = r.orderValue / L, p = r.capital > 0 ? m / r.capital : NaN, bad = m > r.capital;
-      return '<tr><td>' + L + ' 倍' + (bad ? '<span class="tag">保證金不足</span>' : '') + '</td>' +
-             '<td class="' + (bad?'warn':'') + '">' + fmt(m, 2) + '</td>' +
-             '<td class="' + (bad?'warn':'') + '">' + (p*100).toFixed(1) + ' %</td></tr>';
+    const levs = $('levs').value.split(/[,，\s]+/).map(parseFloat).filter(v=>isFinite(v)&&v>0);
+    $('levBody').innerHTML = levs.map(L=>{
+      const m = r.orderValue/L, p = r.capital>0?m/r.capital:NaN, bad = m>r.capital;
+      return '<tr><td>'+L+' 倍'+(bad?'<span class="tag">保證金不足</span>':'')+'</td>'+
+             '<td class="'+(bad?'warn':'')+'">'+fmt(m,2)+'</td>'+
+             '<td class="'+(bad?'warn':'')+'">'+(p*100).toFixed(1)+' %</td></tr>';
     }).join('') || '<tr><td colspan="3" style="color:var(--muted)">請輸入槓桿倍數</td></tr>';
 
-    const beMove = r.entry * r.feeTotal;
+    const beMove = r.entry*r.feeTotal;
     $('formula').textContent =
-      '止損距離 = |開倉價 - 止損價| / 開倉價\n' +
-      '        = |' + r.entry + ' - ' + r.stop + '| / ' + r.entry + ' = ' + (r.stopDist*100).toFixed(4) + '%\n\n' +
-      '來回費率 = 開倉' + pct(r.fOpen) + ' + 平倉' + pct(r.fClose) + ' = ' + pct(r.feeTotal) + '\n\n' +
-      '可承受虧損 = 本金 × 風險%\n' +
-      '          = ' + r.capital + ' × ' + (r.riskPct*100) + '% = ' + fmt(r.maxLoss,2) + ' U\n\n' +
-      '訂單價值 = 可承受虧損 / ' + (r.incFee ? '(止損距離 + 來回費率)' : '止損距離') + '\n' +
-      '        = ' + fmt(r.maxLoss,2) + ' / ' +
-        (r.incFee ? (r.stopDist + r.feeTotal).toFixed(6) : r.stopDist.toFixed(6)) +
-      ' = ' + fmt(r.orderValue, d) + ' U\n\n' +
-      '手續費 = 訂單價值 × 來回費率 = ' + fmt(r.feeCost, 2) + ' U\n' +
-      '保證金 = 訂單價值 / 槓桿倍數\n' +
-      '下單數量 = 訂單價值 / 開倉價 = ' + fmt(r.qty, 6) + ' 顆\n\n' +
-      '── 打平成本 ──\n' +
-      '價格需走 ' + pct(r.feeTotal) + '（約 ' + fmt(beMove, beMove<1?6:2) + ' 價位）才回本，\n' +
-      '相當於止損距離的 ' + (r.breakeven*100).toFixed(1) + '%。';
+      '止損距離 = |開倉價 - 止損價| / 開倉價\n'+
+      '        = |'+r.entry+' - '+r.stop+'| / '+r.entry+' = '+(r.stopDist*100).toFixed(4)+'%\n\n'+
+      '來回費率 = 開倉'+pct(r.fOpen)+' + 止損'+pct(r.fClose)+' = '+pct(r.feeTotal)+'\n\n'+
+      '可承受虧損 = 本金 × 風險% = '+r.capital+' × '+(r.riskPct*100)+'% = '+fmt(r.maxLoss,2)+' U\n\n'+
+      '訂單價值 = 可承受虧損 / '+(r.incFee?'(止損距離 + 來回費率)':'止損距離')+'\n'+
+      '        = '+fmt(r.maxLoss,2)+' / '+(r.incFee?(r.stopDist+r.feeTotal).toFixed(6):r.stopDist.toFixed(6))+
+      ' = '+fmt(r.orderValue,d)+' U\n\n'+
+      '手續費 = 訂單價值 × 來回費率 = '+fmt(r.feeCost,2)+' U\n'+
+      '保證金 = 訂單價值 / 槓桿倍數\n'+
+      '下單數量 = 訂單價值 / 開倉價 = '+fmt(r.qty,6)+' 顆\n\n'+
+      '── 打平成本 ──\n'+
+      '價格需走 '+pct(r.feeTotal)+'（約 '+fmt(beMove,beMove<1?6:2)+' 價位）才回本，\n'+
+      '相當於止損距離的 '+(r.breakeven*100).toFixed(1)+'%。';
   }
 
-  ['capital','entry','stop','risk','dp','incfee','levs','vip','openSide','closeSide','cMaker','cTaker','tp','tpSide']
-    .forEach(id => { const e = $(id); e.addEventListener('input', render); e.addEventListener('change', render); });
+  ['capital','entry','stop','tp','risk','dp','incfee','levs','vip','openSide','closeSide','tpSide','cMaker','cTaker']
+    .forEach(id=>{ const e=$(id); e.addEventListener('input',render); e.addEventListener('change',render); });
 
-  $('copyBtn').addEventListener('click', function(){
-    const txt = $('orderValue').textContent, btn = this;
-    const done = () => { btn.textContent = '已複製 ✓'; setTimeout(() => btn.textContent = '複製', 1200); };
-    if (navigator.clipboard && navigator.clipboard.writeText) {
+  function doCopy(btn, label){
+    const txt = $('orderValue').textContent;
+    const done = () => { btn.textContent='已複製 ✓'; setTimeout(()=>btn.textContent=label,1200); };
+    if (navigator.clipboard && navigator.clipboard.writeText){
       navigator.clipboard.writeText(txt).then(done).catch(done);
     } else {
-      const ta = document.createElement('textarea');
-      ta.value = txt; document.body.appendChild(ta); ta.select();
-      try { document.execCommand('copy'); } catch(e){}
+      const ta=document.createElement('textarea');
+      ta.value=txt; document.body.appendChild(ta); ta.select();
+      try{document.execCommand('copy');}catch(e){}
       document.body.removeChild(ta); done();
     }
-  });
+  }
+  $('copyBtn').addEventListener('click', function(){ doCopy(this,'複製'); });
+  $('fabCopy').addEventListener('click', function(){ doCopy(this,'複製'); });
 
   render();
 })();
