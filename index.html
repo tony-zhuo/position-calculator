@@ -266,16 +266,18 @@
 (function(){
   const $ = id => document.getElementById(id);
 
-  // BingX 永續合約 數字貨幣費率表（%）
+  // 幣安 U 本位合約 USDT 費率表（%）
   const TIERS = [
     {k:'normal', name:'普通用戶',  maker:0.0200, taker:0.0500},
-    {k:'elite',  name:'Elite',    maker:0.0180, taker:0.0450},
-    {k:'vip1',   name:'VIP 1',    maker:0.0140, taker:0.0400},
-    {k:'vip2',   name:'VIP 2',    maker:0.0120, taker:0.0375},
-    {k:'vip3',   name:'VIP 3',    maker:0.0100, taker:0.0350},
-    {k:'vip4',   name:'VIP 4',    maker:0.0080, taker:0.0315},
-    {k:'vip5',   name:'VIP 5',    maker:0.0060, taker:0.0300},
-    {k:'sup',    name:'至尊VIP',   maker:0.0000, taker:0.0250},
+    {k:'vip1',   name:'VIP 1',    maker:0.0180, taker:0.0500},
+    {k:'vip2',   name:'VIP 2',    maker:0.0160, taker:0.0400},
+    {k:'vip3',   name:'VIP 3',    maker:0.0120, taker:0.0320},
+    {k:'vip4',   name:'VIP 4',    maker:0.0100, taker:0.0300},
+    {k:'vip5',   name:'VIP 5',    maker:0.0080, taker:0.0270},
+    {k:'vip6',   name:'VIP 6',    maker:0.0060, taker:0.0250},
+    {k:'vip7',   name:'VIP 7',    maker:0.0040, taker:0.0220},
+    {k:'vip8',   name:'VIP 8',    maker:0.0020, taker:0.0200},
+    {k:'vip9',   name:'VIP 9',    maker:0.0000, taker:0.0170},
     {k:'custom', name:'自訂…',     maker:null,   taker:null}
   ];
   $('vip').innerHTML = TIERS.map(t =>
