@@ -161,7 +161,7 @@
             <input type="number" id="risk" value="1" step="any" inputmode="decimal">
           </div>
           <div class="field">
-            <label>價格小數位</label>
+            <label>訂單價值小數位</label>
             <select id="dp">
               <option value="auto" selected>自動</option>
               <option value="0">0</option><option value="1">1</option>
@@ -298,6 +298,7 @@
   const fmt = (n,d=2) => isFinite(n) ? n.toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d}) : '—';
   const pct = (r,d=4) => (r*100).toFixed(d) + '%';
   const autoDp = v => !isFinite(v) ? 2 : v >= 1000 ? 1 : v >= 10 ? 2 : 4;
+  const decOf = el => (el.value.split('.')[1] || '').length;
 
   function calc(){
     const capital = num($('capital')), entry = num($('entry')), stop = num($('stop')),
@@ -393,7 +394,9 @@
             verdict = dp2>=40 ? '❌ 手續費吃掉毛利的 '+dp2.toFixed(1)+'% — 止盈幅度太窄了。'
                    : dp2>=20 ? '⚠️ 手續費吃掉毛利的 '+dp2.toFixed(1)+'% — 還在可接受邊緣。'
                              : '✅ 手續費只吃掉毛利的 '+dp2.toFixed(1)+'%，影響不大。',
-            sugPx = r.entry*(1+(r.dir==='long'?1:-1)*t.minDist);
+            pxDp = Math.max(decOf($('entry')), decOf($('stop')), decOf($('tp'))), pxF = Math.pow(10,pxDp),
+            sugRaw = r.entry*(1+(r.dir==='long'?1:-1)*t.minDist),
+            sugPx = (r.dir==='long' ? Math.ceil(sugRaw*pxF) : Math.floor(sugRaw*pxF))/pxF;
       $('rrBox').innerHTML =
         '<div class="card" style="margin-top:14px"><h2>盈虧比體檢（扣除手續費後）</h2><div class="stats rr">'+
         [['止盈距離',(t.tpDist*100).toFixed(3)+' %'],
@@ -408,7 +411,7 @@
         '</div><div class="bar"><i style="width:'+Math.min(100,dp2).toFixed(1)+'%;background:'+barC+'"></i></div>'+
         '<div class="hint">手續費侵蝕毛利的比例（綠 &lt;20% ／ 橘 20–40% ／ 紅 &gt;40%）</div>'+
         '<div class="verdict '+vc+'">'+verdict+
-        '<br>要把侵蝕壓到 20% 以內，止盈至少要走 <b>'+(t.minDist*100).toFixed(3)+'%</b>（約 '+fmt(sugPx,sugPx<1?6:1)+'）。</div></div>';
+        '<br>要把侵蝕壓到 20% 以內，止盈至少要走 <b>'+(t.minDist*100).toFixed(3)+'%</b>（約 '+fmt(sugPx,pxDp)+'）。</div></div>';
     }
 
     const levs = $('levs').value.split(/[,，\s]+/).map(parseFloat).filter(v=>isFinite(v)&&v>0);
